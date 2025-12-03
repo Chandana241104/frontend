@@ -1,9 +1,12 @@
 import axios from 'axios';
 
-// api.js
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? process.env.REACT_APP_API_URL 
-  : 'http://localhost:5000/api';
+// This line looks for the link in your Render Environment Variables
+const envApiUrl = import.meta.env?.VITE_API_URL || process.env.REACT_APP_API_URL;
+
+const API_BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? envApiUrl // On Render, it uses the link you saved in the Dashboard
+    : "http://localhost:5000/api"; // On your computer, it uses localhost
 
 const api = axios.create({
   baseURL: API_BASE_URL,

@@ -1,12 +1,11 @@
 import axios from 'axios';
 
-// This line looks for the link in your Render Environment Variables
-const envApiUrl = import.meta.env?.VITE_API_URL || process.env.REACT_APP_API_URL;
-
-const API_BASE_URL =
-  process.env.NODE_ENV === "production"
-    ? envApiUrl // On Render, it uses the link you saved in the Dashboard
-    : "http://localhost:5000/api"; // On your computer, it uses localhost
+// ✅ SAFE VERSION: Uses only standard process.env
+// This works with Create React App and most standard setups
+const API_BASE_URL = 
+  process.env.NODE_ENV === 'production' 
+    ? process.env.REACT_APP_API_URL 
+    : 'http://localhost:5000/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -14,6 +13,7 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
 
 // Request interceptor to add auth token
 api.interceptors.request.use(
